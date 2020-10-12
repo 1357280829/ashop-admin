@@ -4,7 +4,7 @@ namespace App\Admin\Forms;
 
 use Encore\Admin\Widgets\Form;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\UploadedFile;
 
 class ShopConfig extends Form
 {
@@ -15,10 +15,6 @@ class ShopConfig extends Form
      */
     public $title = '商城设置';
 
-    protected $fillable = [
-        'shop_name', 'shop_desc', 'business_hours', 'packing_price', 'delivery_price',
-    ];
-
     /**
      * Handle the form request.
      *
@@ -28,9 +24,12 @@ class ShopConfig extends Form
      */
     public function handle(Request $request)
     {
-        foreach ($request->input() as $key => $value) {
-            if (in_array($key, $this->fillable)) {
-                Cache::put($key, $value);
+        foreach ($request->all() as $key => $value) {
+            if (in_array($key, config('shopconfig.keys'))) {
+                if ($value instanceof UploadedFile) {
+                    $value = $value->store('shopconfig', 'admin');
+                }
+                \App\Models\ShopConfig::updateOrCreate(['key' => $key], ['value' => $value]);
             }
         }
 
@@ -44,14 +43,10 @@ class ShopConfig extends Form
      */
     public function form()
     {
+        $this->image('shop_cover_url', '店铺封面图');
         $this->text('shop_name', '店铺名');
         $this->text('shop_desc', '店铺简介');
         $this->text('business_hours', '营业时间');
-
-        $this->divider();
-
-        $this->currency('packing_price', '包装费')->symbol('￥');
-        $this->currency('delivery_price', '配送费')->symbol('￥');
     }
 
     /**
@@ -61,13 +56,18 @@ class ShopConfig extends Form
      */
     public function data()
     {
-        return [
-            'shop_name'      => Cache::get('shop_name')      ?: '店铺名',
-            'shop_desc'      => Cache::get('shop_desc')      ?: '店铺简介',
-            'business_hours' => Cache::get('business_hours') ?: '营业时间',
+        $shopConfigs = \App\Models\ShopConfig::query()
+            ->whereIn('key', config('shopconfig.keys'))
+            ->pluck('value', 'key')
+            ->toArray();
 
-            'packing_price'  => Cache::get('packing_price')  ?: 0.00,
-            'delivery_price' => Cache::get('delivery_price') ?: 0.00,
+        $defaultShopConfigs = config('shopconfig.default');
+
+        return [
+            'shop_cover_url' => $shopConfigs['shop_cover_url'] ?? $defaultShopConfigs['shop_cover_url'],
+            'shop_name'      => $shopConfigs['shop_name']      ?? $defaultShopConfigs['shop_name'],
+            'shop_desc'      => $shopConfigs['shop_desc']      ?? $defaultShopConfigs['shop_desc'],
+            'business_hours' => $shopConfigs['business_hours'] ?? $defaultShopConfigs['business_hours'],
         ];
     }
 }
