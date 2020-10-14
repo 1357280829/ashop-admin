@@ -25,6 +25,10 @@ class WechatUsersController extends AdminController
     {
         $grid = new Grid(new WechatUser());
 
+        $grid->model()->when(request()->user()->id != 1, function ($query) {
+            $query->where('admin_user_id', request()->user()->id);
+        });
+
         $grid->disableCreateButton();
         $grid->disableExport();
         $grid->disableFilter();
@@ -39,6 +43,11 @@ class WechatUsersController extends AdminController
         $grid->column('city', '所在市');
         $grid->column('created_at', '创建时间');
 
+        if (request()->user()->id == 1) {
+            $grid->column('adminuser.username', '商家账号');
+            $grid->column('adminuser.name', '商家名');
+        }
+
         return $grid;
     }
 
@@ -50,6 +59,8 @@ class WechatUsersController extends AdminController
     protected function form()
     {
         $form = new Form(new WechatUser());
+
+        $form->hidden('admin_user_id')->default(request()->user()->id);
 
         $form->text('nickname', '用户昵称');
         $form->mobile('phone', '手机号码');

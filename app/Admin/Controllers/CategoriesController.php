@@ -26,6 +26,10 @@ class CategoriesController extends AdminController
     {
         $grid = new Grid(new Category());
 
+        $grid->model()->when(request()->user()->id != 1, function ($query) {
+            $query->where('admin_user_id', request()->user()->id);
+        });
+
         $grid->disableFilter();
         $grid->disableExport();
 
@@ -33,6 +37,11 @@ class CategoriesController extends AdminController
         $grid->column('name', '名称');
         $grid->column('sort', '自定义排序值');
         $grid->column('created_at', '创建时间');
+
+        if (request()->user()->id == 1) {
+            $grid->column('adminuser.username', '商家账号');
+            $grid->column('adminuser.name', '商家名');
+        }
 
         return $grid;
     }
@@ -45,6 +54,8 @@ class CategoriesController extends AdminController
     protected function form()
     {
         $form = new Form(new Category());
+
+        $form->hidden('admin_user_id')->default(request()->user()->id);
 
         $form->text('name', '名称')->required();
         $form->number('sort', '自定义排序值')->default(0);

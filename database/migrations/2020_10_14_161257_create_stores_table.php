@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShopConfigTable extends Migration
+class CreateStoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateShopConfigTable extends Migration
      */
     public function up()
     {
-        Schema::create('shop_config', function (Blueprint $table) {
+        //  商家表
+        Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->string('key')->comment('配置键');
-            $table->string('name')->nullable()->comment('配置名');
-            $table->text('value')->comment('配置值');
+            $table->string('key')->comment('商家key');
             $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -30,6 +30,6 @@ class CreateShopConfigTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shop_config');
+        Schema::dropIfExists('stores');
     }
 }

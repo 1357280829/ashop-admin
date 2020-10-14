@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->unsignedTinyInteger('is_on')->default(0)->comment('是否上架');
             $table->unsignedInteger('sort')->default(0)->comment('自定义排序值');
             $table->string('unit_name')->comment('单位名');
+            $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');
             $table->timestamps();
             $table->softDeletes();
         });

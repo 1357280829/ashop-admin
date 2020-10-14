@@ -32,7 +32,10 @@ class ShopConfig extends Form
                 if (in_array($key, $urlKeys) && $value instanceof UploadedFile) {
                     $value = $value->store('shopconfig', 'admin');
                 }
-                \App\Models\ShopConfig::updateOrCreate(['key' => $key], ['value' => $value]);
+                \App\Models\ShopConfig::updateOrCreate(
+                    ['key' => $key, 'admin_user_id' => $request->user()->id],
+                    ['value' => $value]
+                );
             }
         }
 
@@ -46,6 +49,8 @@ class ShopConfig extends Form
      */
     public function form()
     {
+        $this->hidden('admin_user_id', request()->user()->id);
+
         $this->image('shop_cover_url', '店铺封面图');
         $this->image('shop_background_url', '店铺背景图');
         $this->text('shop_name', '店铺名');
@@ -61,6 +66,7 @@ class ShopConfig extends Form
     public function data()
     {
         $shopConfigs = \App\Models\ShopConfig::query()
+            ->where('admin_user_id', request()->user()->id)
             ->whereIn('key', config('shopconfig.keys'))
             ->pluck('value', 'key')
             ->toArray();

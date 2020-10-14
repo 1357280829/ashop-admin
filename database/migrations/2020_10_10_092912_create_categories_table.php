@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name')->comment('分类名');
             $table->unsignedInteger('sort')->default(0)->comment('自定义排序');
+            $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');
             $table->timestamps();
             $table->softDeletes();
         });

@@ -22,6 +22,7 @@ class CreateAuthenticatedsTable extends Migration
             $table->string('token')->comment('token');
             $table->unsignedInteger('ttl')->default(0)->comment('生命周期(单位:秒)，0表示无限');
             $table->timestamp('expired_at')->nullable()->comment('失效时间，空表示无限');
+            $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');
             $table->timestamps();
         });
     }

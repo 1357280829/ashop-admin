@@ -17,5 +17,6 @@ Route::group([
     $router->resource('products', 'ProductsController');
     $router->get('shop-config', 'ShopConfigController@index');
     $router->resource('wechat-users', 'WechatUsersController');
+    $router->resource('stores', 'StoresController');
 
 });

@@ -27,6 +27,10 @@ class ProductsController extends AdminController
     {
         $grid = new Grid(new Product());
 
+        $grid->model()->when(request()->user()->id != 1, function ($query) {
+            $query->where('admin_user_id', request()->user()->id);
+        });
+
         $grid->disableExport();
         $grid->disableFilter();
 
@@ -42,6 +46,11 @@ class ProductsController extends AdminController
         $grid->column('unit_name', '单位');
         $grid->column('created_at', '创建时间');
 
+        if (request()->user()->id == 1) {
+            $grid->column('adminuser.username', '商家账号');
+            $grid->column('adminuser.name', '商家名');
+        }
+
         return $grid;
     }
 
@@ -54,7 +63,14 @@ class ProductsController extends AdminController
     {
         $form = new Form(new Product());
 
-        $form->multipleSelect('categories', '所属分类')->options(Category::pluck('name', 'id'));
+        $form->hidden('admin_user_id')->default(request()->user()->id);
+
+        $categoryOptions = Category::query()
+            ->when(request()->user()->id != 1, function ($query) {
+                $query->where('admin_user_id', request()->user()->id);
+            })
+            ->pluck('name', 'id');
+        $form->multipleSelect('categories', '所属分类')->options($categoryOptions);
 
         $form->divider();
 

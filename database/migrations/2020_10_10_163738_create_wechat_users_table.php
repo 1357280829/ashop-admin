@@ -26,6 +26,7 @@ class CreateWechatUsersTable extends Migration
             $table->string('country')->nullable()->comment('用户所在国家');
             $table->string('province')->nullable()->comment('用户所在省份');
             $table->string('city')->nullable()->comment('用户所在城市');
+            $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');
             $table->timestamps();
             $table->softDeletes();
         });
