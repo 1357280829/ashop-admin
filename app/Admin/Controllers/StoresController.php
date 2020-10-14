@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\AdminUser;
 use App\Models\Store;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -26,12 +27,7 @@ class StoresController extends AdminController
     {
         $grid = new Grid(new Store());
 
-//        $keyIndex = 'ashop-admin_user';
-//        $adminUserId = 1;
-//        dd(md5($keyIndex) . md5($keyIndex . '-' . $adminUserId));
-
         $grid->disableActions();
-        $grid->disableCreateButton();
         $grid->disableExport();
         $grid->disablePagination();
         $grid->disableFilter();
@@ -45,5 +41,23 @@ class StoresController extends AdminController
         $grid->column('created_at', '创建时间');
 
         return $grid;
+    }
+
+    /**
+     * Make a form builder.
+     *
+     * @return Form
+     */
+    protected function form()
+    {
+        $form = new Form(new Store());
+
+        $keyIndex = 'ashop-admin_user';
+        $form->hidden('key')->default(md5($keyIndex) . md5($keyIndex . '-' . request()->admin_user_id));
+        $form->select('admin_user_id', '商家后台账号名')
+            ->options(AdminUser::doesntHave('stores')->pluck('name', 'id'))
+            ->required();
+
+        return $form;
     }
 }
