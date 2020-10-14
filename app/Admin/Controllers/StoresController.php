@@ -55,7 +55,7 @@ class StoresController extends AdminController
         $keyIndex = 'ashop-admin_user';
         $form->hidden('key')->default(md5($keyIndex) . md5($keyIndex . '-' . request()->admin_user_id));
         $form->select('admin_user_id', '商家后台账号名')
-            ->options(AdminUser::doesntHave('stores')->where('admin_user_id', '<>', 1)->pluck('name', 'id'))
+            ->options(AdminUser::doesntHave('stores')->where('id', '<>', 1)->pluck('name', 'id'))
             ->required();
 
         return $form;
