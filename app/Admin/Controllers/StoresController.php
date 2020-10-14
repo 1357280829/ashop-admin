@@ -7,7 +7,6 @@ use App\Models\Store;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Show;
 
 class StoresController extends AdminController
 {
@@ -27,6 +26,8 @@ class StoresController extends AdminController
     {
         $grid = new Grid(new Store());
 
+        $grid->model()->orderByDesc('created_at');
+
         $grid->disableActions();
         $grid->disableExport();
         $grid->disablePagination();
@@ -38,7 +39,7 @@ class StoresController extends AdminController
         $grid->column('adminuser.id', '商家后台账号ID');
         $grid->column('adminuser.username', '商家后台账号');
         $grid->column('adminuser.name', '商家后台账号名');
-        $grid->column('created_at', '创建时间');
+        $grid->column('created_at', '创建时间')->sortable();
 
         return $grid;
     }

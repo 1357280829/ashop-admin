@@ -2,11 +2,11 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\AdminUser;
 use App\Models\Category;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Show;
 
 class CategoriesController extends AdminController
 {
@@ -26,16 +26,24 @@ class CategoriesController extends AdminController
     {
         $grid = new Grid(new Category());
 
-        $grid->model()->when(request()->user()->id != 1, function ($query) {
-            $query->where('admin_user_id', request()->user()->id);
-        });
+        $grid->model()->orderByDesc('created_at');
 
-        $grid->disableFilter();
         $grid->disableExport();
+
+        if (request()->user()->id == 1) {
+            $grid->filter(function ($filter) {
+                $filter->disableIdFilter();
+                $filter->equal('admin_user_id', '商家')->select(AdminUser::where('id', '<>', 1)->pluck('name', 'id'));
+            });
+        } else {
+            $grid->model()->where('admin_user_id', request()->user()->id);
+
+            $grid->disableFilter();
+        }
 
         $grid->column('id', 'ID');
         $grid->column('name', '名称');
-        $grid->column('sort', '自定义排序值');
+        $grid->column('sort', '自定义排序值')->sortable();
         $grid->column('created_at', '创建时间');
 
         if (request()->user()->id == 1) {

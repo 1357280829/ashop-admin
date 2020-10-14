@@ -41,7 +41,7 @@ class WechatUsersController extends AdminController
         $grid->column('country', '所在国');
         $grid->column('province', '所在省');
         $grid->column('city', '所在市');
-        $grid->column('created_at', '创建时间');
+        $grid->column('created_at', '创建时间')->sortable();
 
         if (request()->user()->id == 1) {
             $grid->column('adminuser.username', '商家账号');

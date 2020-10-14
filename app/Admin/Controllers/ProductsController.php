@@ -2,12 +2,12 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\AdminUser;
 use App\Models\Category;
 use App\Models\Product;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
-use Encore\Admin\Show;
 
 class ProductsController extends AdminController
 {
@@ -27,24 +27,41 @@ class ProductsController extends AdminController
     {
         $grid = new Grid(new Product());
 
-        $grid->model()->when(request()->user()->id != 1, function ($query) {
-            $query->where('admin_user_id', request()->user()->id);
-        });
+        $grid->model()->orderByDesc('created_at');
 
         $grid->disableExport();
-        $grid->disableFilter();
+
+        if (request()->user()->id == 1) {
+            $grid->filter(function ($filter) {
+                $filter->disableIdFilter();
+                $filter->equal('admin_user_id', '商家')->select(AdminUser::where('id', '<>', 1)->pluck('name', 'id'));
+            });
+        } else {
+            $grid->model()->where('admin_user_id', request()->user()->id);
+
+            $grid->disableFilter();
+
+            $categoryOptions = Category::where('admin_user_id', request()->user()->id)->pluck('name', 'id');
+            $grid->selector(function (Grid\Tools\Selector $selector) use ($categoryOptions) {
+                $selector->select('categories', '所属分类', $categoryOptions, function ($query, $categoryIds) {
+                    $query->whereHas('categories', function ($subQuery) use ($categoryIds) {
+                        return $subQuery->whereIn('categories.id', $categoryIds);
+                    });
+                });
+            });
+        }
 
         $grid->column('id', 'ID');
         $grid->column('name', '商品名');
         $grid->column('cover_url', '封面图')->image('', 50, 50);
         $grid->column('categories', '所属分类')->pluck('name')->label();
-        $grid->column('sale_price', '销售价');
-        $grid->column('packing_price', '包装费');
-        $grid->column('stock', '库存');
+        $grid->column('sale_price', '销售价')->sortable();
+        $grid->column('packing_price', '包装费')->sortable();
+        $grid->column('stock', '库存')->sortable();
         $grid->column('is_on', '上架开关')->switch();
-        $grid->column('sort', '自定义排序值');
+        $grid->column('sort', '自定义排序值')->sortable();
         $grid->column('unit_name', '单位');
-        $grid->column('created_at', '创建时间');
+        $grid->column('created_at', '创建时间')->sortable();
 
         if (request()->user()->id == 1) {
             $grid->column('adminuser.username', '商家账号');
