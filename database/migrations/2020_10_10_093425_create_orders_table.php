@@ -16,7 +16,7 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('no')->comment('订单编号');
-            $table->string('taking_code')->comment('自取号');
+            $table->string('taking_code')->nullable()->comment('自取号');
             $table->string('phone')->comment('联系电话');
             $table->string('arrived_time')->comment('自提时间');
             $table->json('products')->comment('商品快照');
