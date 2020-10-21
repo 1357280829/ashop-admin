@@ -23,6 +23,11 @@ class Order extends Model
         return $this->belongsTo(WechatUser::class);
     }
 
+    public function adminuser()
+    {
+        return $this->belongsTo(AdminUser::class, 'admin_user_id', 'id');
+    }
+
     public function getCartsDescAttribute()
     {
         $cartDesc = implode(',', array_column(array_column(json_decode($this->attributes['carts']), 'product'), 'name'));

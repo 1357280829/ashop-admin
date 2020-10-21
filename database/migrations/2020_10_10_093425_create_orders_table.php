@@ -19,7 +19,7 @@ class CreateOrdersTable extends Migration
             $table->string('taking_code')->nullable()->comment('自取号');
             $table->string('phone')->comment('联系电话');
             $table->string('arrived_time')->comment('自提时间');
-            $table->json('products')->comment('商品快照');
+            $table->json('carts')->comment('商品快照');
             $table->decimal('total_price', 10, 2)->default(0.00)->comment('合计价');
             $table->unsignedTinyInteger('is_paid')->default(0)->comment('是否支付');
             $table->text('remark')->nullable()->comment('备注');

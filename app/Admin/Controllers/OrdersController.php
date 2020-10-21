@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Models\AdminUser;
 use App\Models\Order;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
@@ -29,7 +30,6 @@ class OrdersController extends AdminController
 
         $grid->disableCreateButton();
         $grid->disableExport();
-        $grid->disableFilter();
 
         $grid->model()->collection(function (Collection $collection) {
             $collection->each->append('carts_desc');
@@ -37,8 +37,15 @@ class OrdersController extends AdminController
         });
 
         if (request()->user()->id == 1) {
+            $grid->filter(function ($filter) {
+                $filter->disableIdFilter();
+                $filter->equal('admin_user_id', '商家')->select(AdminUser::where('id', '<>', 1)->pluck('name', 'id'));
+            });
+
             $grid->model()->latest();
         } else {
+            $grid->disableFilter();
+
             $grid->model()
                 ->latest()
                 ->where('is_paid', 1)
@@ -67,6 +74,12 @@ class OrdersController extends AdminController
         $grid->column('total_price', '合计价');
         $grid->column('remark', '备注');
         $grid->column('created_at', '创建时间')->sortable();
+
+        if (request()->user()->id == 1) {
+            $grid->column('is_paid', '是否支付')->bool();
+            $grid->column('adminuser.username', '商家账号');
+            $grid->column('adminuser.name', '商家名');
+        }
 
         return $grid;
     }
