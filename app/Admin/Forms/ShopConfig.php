@@ -56,6 +56,7 @@ class ShopConfig extends Form
         $this->text('shop_name', '店铺名');
         $this->text('shop_desc', '店铺简介');
         $this->text('business_hours', '营业时间');
+        $this->currency('minimum_price', '最低消费')->symbol('￥');
     }
 
     /**
@@ -79,6 +80,7 @@ class ShopConfig extends Form
             'shop_name'           => $shopConfigs['shop_name']           ?? $defaultShopConfigs['shop_name'],
             'shop_desc'           => $shopConfigs['shop_desc']           ?? $defaultShopConfigs['shop_desc'],
             'business_hours'      => $shopConfigs['business_hours']      ?? $defaultShopConfigs['business_hours'],
+            'minimum_price'       => $shopConfigs['minimum_price']       ?? $defaultShopConfigs['minimum_price'],
         ];
     }
 }
