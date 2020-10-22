@@ -13,6 +13,7 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
+        //  商品表
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('商品名');

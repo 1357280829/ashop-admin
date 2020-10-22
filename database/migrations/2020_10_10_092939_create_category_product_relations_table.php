@@ -13,6 +13,7 @@ class CreateCategoryProductRelationsTable extends Migration
      */
     public function up()
     {
+        //  分类商品关联表
         Schema::create('category_product_relations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_id')->comment('分类id');

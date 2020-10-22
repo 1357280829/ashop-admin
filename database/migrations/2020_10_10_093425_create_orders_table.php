@@ -13,6 +13,7 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
+        //  订单表
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('no')->comment('订单编号');

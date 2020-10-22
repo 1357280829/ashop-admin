@@ -13,6 +13,7 @@ class CreateMiniProgramPaymentOrdersTable extends Migration
      */
     public function up()
     {
+        //  小程序支付预订单表
         Schema::create('mini_program_payment_orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');

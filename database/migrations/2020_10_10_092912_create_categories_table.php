@@ -13,6 +13,7 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
+        //  分类表
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('分类名');
