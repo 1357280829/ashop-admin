@@ -17,7 +17,7 @@ class CreateAuthenticatedsTable extends Migration
         Schema::create('authenticateds', function (Blueprint $table) {
             $table->id();
             $table->string('authenticate_type')->comment('认证类型;mini_program:小程序认证,official_account:公众号认证');
-            $table->string('authenticated_user_model')->comment('认证者用户模型;wechat:微信用户模型');
+            $table->string('authenticated_user_model')->comment('认证者用户模型');
             $table->unsignedBigInteger('authenticated_user_id')->comment('认证者用户id');
             $table->string('token')->comment('token');
             $table->unsignedInteger('ttl')->default(0)->comment('生命周期(单位:秒)，0表示无限');

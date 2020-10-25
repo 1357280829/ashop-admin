@@ -18,6 +18,9 @@ class CreateStoresTable extends Migration
             $table->id();
             $table->string('key')->comment('商家key');
             $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');
+            $table->string('business_license_code')->nullable()->comment('营业执照-组织机构代码');
+            $table->string('business_license_name')->nullable()->comment('营业执照-名称');
+            $table->unsignedTinyInteger('is_enable_bill_service')->default(0)->comment('是否开启发票服务');
             $table->timestamps();
             $table->softDeletes();
         });

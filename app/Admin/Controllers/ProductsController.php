@@ -2,6 +2,7 @@
 
 namespace App\Admin\Controllers;
 
+use App\Admin\Extensions\ProductsExporter;
 use App\Models\AdminUser;
 use App\Models\Category;
 use App\Models\Product;
@@ -29,7 +30,7 @@ class ProductsController extends AdminController
 
         $grid->model()->orderByDesc('created_at');
 
-        $grid->disableExport();
+        $grid->exporter(new ProductsExporter());
 
         if (request()->user()->id == 1) {
             $grid->filter(function ($filter) {
