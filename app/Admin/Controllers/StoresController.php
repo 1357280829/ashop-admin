@@ -71,6 +71,11 @@ class StoresController extends AdminController
         $form->text('business_license_name', '营业执照名称');
         $form->switch('is_enable_bill_service', '发票服务');
 
+        $form->text('mini_program_appid', '小程序AppID');
+        $form->text('mini_program_app_secret', '小程序AppSecret');
+        $form->text('payment_mch_id', '商户号ID');
+        $form->text('payment_key', '商户号API密钥');
+
         $form->saving(function (Form $form) {
             $keyIndex = 'ashop-admin_user';
             $form->key = $form->key ?: md5($keyIndex) . md5($keyIndex . '-' . request()->admin_user_id . '-' . config_path('app.key'));

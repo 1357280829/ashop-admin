@@ -21,6 +21,10 @@ class CreateStoresTable extends Migration
             $table->string('business_license_code')->nullable()->comment('营业执照-组织机构代码');
             $table->string('business_license_name')->nullable()->comment('营业执照-名称');
             $table->unsignedTinyInteger('is_enable_bill_service')->default(0)->comment('是否开启发票服务');
+            $table->string('mini_program_appid')->nullable()->comment('小程序AppID');
+            $table->string('mini_program_app_secret')->nullable()->comment('小程序AppSecret');
+            $table->string('payment_mch_id')->nullable()->comment('商户号ID');
+            $table->string('payment_key')->nullable()->comment('商户号API密钥');
             $table->timestamps();
             $table->softDeletes();
         });
