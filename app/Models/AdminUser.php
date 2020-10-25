@@ -8,6 +8,6 @@ class AdminUser extends Model
 
     public function stores()
     {
-        return $this->hasMany(Store::class, 'admin_user_id', 'id');
+        return $this->hasOne(Store::class, 'admin_user_id', 'id');
     }
 }

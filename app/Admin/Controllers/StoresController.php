@@ -53,18 +53,28 @@ class StoresController extends AdminController
     {
         $form = new Form(new Store());
 
-        $keyIndex = 'ashop-admin_user';
-        $key = md5($keyIndex) . md5($keyIndex . '-' . request()->admin_user_id . '-' . config_path('app.key'));
-        $form->hidden('key')->default($key);
+        $form->hidden('key');
 
-        $form->select('admin_user_id', '商家后台账号名')
-            ->options(AdminUser::where('id', '<>', 1)->pluck('name', 'id'))
-            ->creationRules(['required', 'unique:stores,admin_user_id'])
-            ->updateRules(['required', 'unique:stores,admin_user_id,{{id}}']);
-
+        $options = AdminUser::query()
+            ->when($form->isEditing(), function ($query) {
+                return $query->where(function ($subQuery) {
+                    return $subQuery->doesntHave('stores')
+                        ->orWhere('id', '<>', request()->route()->parameters()['store']);
+                });
+            }, function ($query) {
+                return $query->doesntHave('stores');
+            })
+            ->where('id', '<>', 1)
+            ->pluck('name', 'id');
+        $form->select('admin_user_id', '商家后台账号名')->options($options);
         $form->text('business_license_code', '组织机构代码');
         $form->text('business_license_name', '营业执照名称');
         $form->switch('is_enable_bill_service', '发票服务');
+
+        $form->saving(function (Form $form) {
+            $keyIndex = 'ashop-admin_user';
+            $form->key = $form->key ?: md5($keyIndex) . md5($keyIndex . '-' . request()->admin_user_id . '-' . config_path('app.key'));
+        });
 
         return $form;
     }
