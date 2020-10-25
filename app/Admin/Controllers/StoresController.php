@@ -32,10 +32,6 @@ class StoresController extends AdminController
         $grid->disablePagination();
         $grid->disableFilter();
         $grid->disableRowSelector();
-        $grid->actions(function (Grid\Displayers\Actions $actions) {
-            $actions->disableView();
-            $actions->disableDelete();
-        });
 
         $grid->column('id', 'ID');
         $grid->column('key', '商家KEY')->width(470)->copyable();
@@ -59,7 +55,7 @@ class StoresController extends AdminController
         $form = new Form(new Store());
 
         $keyIndex = 'ashop-admin_user';
-        $key = md5($keyIndex) . md5($keyIndex . '-' . request()->admin_user_id . '-' . microtime());
+        $key = md5($keyIndex) . md5($keyIndex . '-' . request()->admin_user_id . '-' . config_path('app.key'));
         $form->hidden('key')->default($key);
 
         $form->select('admin_user_id', '商家后台账号名')
