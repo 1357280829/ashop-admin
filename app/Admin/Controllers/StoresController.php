@@ -35,7 +35,6 @@ class StoresController extends AdminController
 
         $grid->column('id', 'ID');
         $grid->column('key', '商家KEY')->width(470)->copyable();
-        $grid->column('business_license_code', '组织机构代码');
         $grid->column('business_license_name', '营业执照名称');
         $grid->column('is_enable_bill_service', '发票服务开关')->switch();
         $grid->column('adminuser.username', '商家后台账号');
