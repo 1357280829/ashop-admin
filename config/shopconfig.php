@@ -4,7 +4,7 @@
 return [
     'keys' => [
         'shop_cover_url', 'shop_background_url', 'shop_name', 'shop_desc', 'business_start_at', 'business_end_at',
-        'shop_longitude', 'shop_latitude', 'minimum_price',
+        'shop_longitude', 'shop_latitude', 'shop_address_detail', 'minimum_price',
     ],
 
     'url_keys' => [
@@ -20,6 +20,7 @@ return [
         'business_end_at'     => '23:59',
         'shop_longitude'      => '0.00',
         'shop_latitude'       => '0.00',
+        'shop_address_detail' => '店铺地址详细信息',
         'minimum_price'       => 0,
     ],
 ];

@@ -59,6 +59,7 @@ class ShopConfig extends Form
         $this->time('business_end_at', '营业结束时间')->format('HH:mm');
         $this->text('shop_longitude', '店铺经度');
         $this->text('shop_latitude', '店铺纬度');
+        $this->text('shop_address_detail', '店铺地址详细信息');
         $this->currency('minimum_price', '最低消费')->symbol('￥');
     }
 
@@ -86,6 +87,7 @@ class ShopConfig extends Form
             'business_end_at'     => $shopConfigs['business_end_at']     ?? $defaultShopConfigs['business_end_at'],
             'shop_longitude'      => $shopConfigs['shop_longitude']      ?? $defaultShopConfigs['shop_longitude'],
             'shop_latitude'       => $shopConfigs['shop_latitude']       ?? $defaultShopConfigs['shop_latitude'],
+            'shop_address_detail' => $shopConfigs['shop_address_detail'] ?? $defaultShopConfigs['shop_address_detail'],
             'minimum_price'       => $shopConfigs['minimum_price']       ?? $defaultShopConfigs['minimum_price'],
         ];
     }
