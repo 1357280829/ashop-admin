@@ -26,8 +26,6 @@ class StoresController extends AdminController
     {
         $grid = new Grid(new Store());
 
-        $grid->model()->orderByDesc('created_at');
-
         $grid->disableExport();
         $grid->disablePagination();
         $grid->disableFilter();
