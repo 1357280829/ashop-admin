@@ -398,6 +398,20 @@ return [
     |
     */
     'extensions' => [
+        'latlong' => [
 
+            // Whether to enable this extension, defaults to true
+            'enable' => true,
+
+            // Specify the default provider
+            'default' => 'baidu',
+
+            // According to the selected provider above, fill in the corresponding api_key
+            'providers' => [
+                'baidu' => [
+                    'api_key' => '6GthClm3dXQ1nWOfhtA10Y7cNb4Tcfh2',
+                ],
+            ]
+        ]
     ],
 ];

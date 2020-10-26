@@ -60,6 +60,9 @@ class ShopConfig extends Form
         $this->text('shop_longitude', '店铺经度');
         $this->text('shop_latitude', '店铺纬度');
         $this->text('shop_address_detail', '店铺地址详细信息');
+
+        $this->latlong('shop_latitude', 'shop_longitude');
+
         $this->currency('minimum_price', '最低消费')->symbol('￥');
     }
 
