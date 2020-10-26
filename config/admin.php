@@ -409,7 +409,7 @@ return [
             // According to the selected provider above, fill in the corresponding api_key
             'providers' => [
                 'baidu' => [
-                    'api_key' => '6GthClm3dXQ1nWOfhtA10Y7cNb4Tcfh2',
+                    'api_key' => 'FpGPBm5Qeex2e2ZQe6uNXw0qp2d62m1g',
                 ],
             ]
         ]
