@@ -55,7 +55,10 @@ class ShopConfig extends Form
         $this->image('shop_background_url', '店铺背景图');
         $this->text('shop_name', '店铺名');
         $this->text('shop_desc', '店铺简介');
-        $this->text('business_hours', '营业时间');
+        $this->time('business_start_at', '营业开始时间');
+        $this->time('business_end_at', '营业结束时间');
+        $this->text('shop_longitude', '店铺经度');
+        $this->text('shop_latitude', '店铺纬度');
         $this->currency('minimum_price', '最低消费')->symbol('￥');
     }
 
@@ -79,7 +82,10 @@ class ShopConfig extends Form
             'shop_background_url' => $shopConfigs['shop_background_url'] ?? $defaultShopConfigs['shop_background_url'],
             'shop_name'           => $shopConfigs['shop_name']           ?? $defaultShopConfigs['shop_name'],
             'shop_desc'           => $shopConfigs['shop_desc']           ?? $defaultShopConfigs['shop_desc'],
-            'business_hours'      => $shopConfigs['business_hours']      ?? $defaultShopConfigs['business_hours'],
+            'business_start_at'   => $shopConfigs['business_start_at']   ?? $defaultShopConfigs['business_start_at'],
+            'business_end_at'     => $shopConfigs['business_end_at']     ?? $defaultShopConfigs['business_end_at'],
+            'shop_longitude'      => $shopConfigs['shop_longitude']      ?? $defaultShopConfigs['shop_longitude'],
+            'shop_latitude'       => $shopConfigs['shop_latitude']       ?? $defaultShopConfigs['shop_latitude'],
             'minimum_price'       => $shopConfigs['minimum_price']       ?? $defaultShopConfigs['minimum_price'],
         ];
     }
