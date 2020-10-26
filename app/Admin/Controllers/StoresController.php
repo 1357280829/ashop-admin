@@ -57,7 +57,9 @@ class StoresController extends AdminController
             ->when($form->isEditing(), function ($query) {
                 return $query->where(function ($subQuery) {
                     return $subQuery->doesntHave('stores')
-                        ->orWhere('id', '<>', request()->route()->parameters()['store']);
+                        ->orWhereHas('stores', function ($deepQuery) {
+                            return $deepQuery->whereKey(request()->route()->parameters()['store']);
+                        });
                 });
             }, function ($query) {
                 return $query->doesntHave('stores');
