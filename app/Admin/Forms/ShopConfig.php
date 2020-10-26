@@ -55,8 +55,8 @@ class ShopConfig extends Form
         $this->image('shop_background_url', '店铺背景图');
         $this->text('shop_name', '店铺名');
         $this->text('shop_desc', '店铺简介');
-        $this->time('business_start_at', '营业开始时间');
-        $this->time('business_end_at', '营业结束时间');
+        $this->time('business_start_at', '营业开始时间')->format('HH:mm');
+        $this->time('business_end_at', '营业结束时间')->format('HH:mm');
         $this->text('shop_longitude', '店铺经度');
         $this->text('shop_latitude', '店铺纬度');
         $this->currency('minimum_price', '最低消费')->symbol('￥');
