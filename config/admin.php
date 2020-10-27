@@ -404,12 +404,15 @@ return [
             'enable' => true,
 
             // Specify the default provider
-            'default' => 'baidu',
+            'default' => 'tencent',
 
             // According to the selected provider above, fill in the corresponding api_key
             'providers' => [
                 'baidu' => [
                     'api_key' => 'FpGPBm5Qeex2e2ZQe6uNXw0qp2d62m1g',
+                ],
+                'tencent' => [
+                    'api_key' => '7HLBZ-PJRCW-BPCRS-OTEFJ-ETRV3-URFZS',
                 ],
             ]
         ]
