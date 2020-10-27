@@ -44,7 +44,12 @@ class OrdersController extends AdminController
 
             $grid->model()->latest();
         } else {
-            $grid->disableFilter();
+            $grid->filter(function ($filter) {
+                $filter->disableIdFilter();
+                $filter->like('taking_code', '自取号');
+                $filter->like('phone', '联系电话');
+                $filter->like('arrived_time', '自提时间');
+            });
 
             $grid->model()
                 ->where('is_paid', 1)
@@ -71,12 +76,12 @@ class OrdersController extends AdminController
         });
         $grid->column('phone', '联系电话');
         $grid->column('arrived_time', '自提时间');
-        $grid->column('total_price', '合计价');
+        $grid->column('total_price', '合计价')->sortable();
         $grid->column('remark', '备注');
         $grid->column('created_at', '创建时间')->sortable();
 
         if (request()->user()->id == 1) {
-            $grid->column('is_paid', '是否支付')->bool();
+            $grid->column('is_paid', '是否支付')->bool()->filter([0 => '否', 1 => '是']);
             $grid->column('adminuser.name', '商家名');
         }
 
