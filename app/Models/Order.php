@@ -10,8 +10,8 @@ class Order extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'no', 'taking_code', 'phone', 'arrived_time', 'carts', 'total_price', 'is_paid', 'remark', 'wechat_user_id',
-        'admin_user_id',
+        'no', 'taking_code', 'phone', 'arrived_time', 'carts', 'total_price', 'is_paid', 'remark', 'is_finished',
+        'wechat_user_id', 'admin_user_id',
     ];
 
     protected $casts = [

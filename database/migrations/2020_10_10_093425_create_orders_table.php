@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_price', 10, 2)->default(0.00)->comment('合计价');
             $table->unsignedTinyInteger('is_paid')->default(0)->comment('是否支付');
             $table->text('remark')->nullable()->comment('备注');
+            $table->unsignedTinyInteger('is_finished')->default(0)->comment('是否完成');
             $table->unsignedBigInteger('wechat_user_id')->comment('微信用户id');
             $table->unsignedBigInteger('admin_user_id')->comment('后台账号id');
             $table->timestamps();

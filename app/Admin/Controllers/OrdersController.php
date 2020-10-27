@@ -60,6 +60,7 @@ class OrdersController extends AdminController
         $grid->column('id', 'ID');
         $grid->column('no', '订单编号')->copyable();
         $grid->column('taking_code', '自取号')->label();
+        $grid->column('is_finished', '是否完成')->switch()->filter([0 => '否', 1 => '是']);
         $grid->column('carts_desc', '已购商品')->expand(function (Order $model) {
             return new Table(
                 ['商品名', '购买数量', '单品销售价', '单位', '小计'],
@@ -108,6 +109,7 @@ class OrdersController extends AdminController
         $form->text('arrived_time', '自提时间')->readonly();
         $form->currency('total_price', '合计价')->symbol('￥')->default(0.00)->readonly();
         $form->textarea('remark', '备注')->readonly();
+        $form->switch('is_finished', '是否完成');
 
         $form->divider();
 
