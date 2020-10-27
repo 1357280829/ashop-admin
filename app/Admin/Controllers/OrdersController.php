@@ -47,9 +47,9 @@ class OrdersController extends AdminController
             $grid->disableFilter();
 
             $grid->model()
-                ->latest()
                 ->where('is_paid', 1)
-                ->where('admin_user_id', request()->user()->id);
+                ->where('admin_user_id', request()->user()->id)
+                ->latest();
         }
 
         $grid->column('id', 'ID');
@@ -77,7 +77,6 @@ class OrdersController extends AdminController
 
         if (request()->user()->id == 1) {
             $grid->column('is_paid', '是否支付')->bool();
-            $grid->column('adminuser.username', '商家账号');
             $grid->column('adminuser.name', '商家名');
         }
 

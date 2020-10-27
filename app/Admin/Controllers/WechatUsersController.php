@@ -35,7 +35,7 @@ class WechatUsersController extends AdminController
 
         $grid->column('id', 'ID');
         $grid->column('nickname', '用户昵称');
-        $grid->column('phone', '手机号码')->default('-');
+//        $grid->column('phone', '手机号码')->default('-');
         $grid->column('avatar_url', '用户头像')->image('', 50, 50);
         $grid->column('gender', '性别')->using([0 => '未知',1 => '男',2 => '女']);
         $grid->column('country', '所在国');
@@ -44,7 +44,6 @@ class WechatUsersController extends AdminController
         $grid->column('created_at', '创建时间')->sortable();
 
         if (request()->user()->id == 1) {
-            $grid->column('adminuser.username', '商家账号');
             $grid->column('adminuser.name', '商家名');
         }
 
@@ -63,7 +62,7 @@ class WechatUsersController extends AdminController
         $form->hidden('admin_user_id')->default(request()->user()->id);
 
         $form->text('nickname', '用户昵称');
-        $form->mobile('phone', '手机号码');
+//        $form->mobile('phone', '手机号码');
         $form->text('unionid', 'unionid')->readonly();
         $form->text('openid_mini_program', '小程序openid')->readonly();
         $form->text('openid_official_account', '公众号openid')->readonly();

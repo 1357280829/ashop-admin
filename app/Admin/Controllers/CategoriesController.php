@@ -47,7 +47,6 @@ class CategoriesController extends AdminController
         $grid->column('created_at', '创建时间');
 
         if (request()->user()->id == 1) {
-            $grid->column('adminuser.username', '商家账号');
             $grid->column('adminuser.name', '商家名');
         }
 
