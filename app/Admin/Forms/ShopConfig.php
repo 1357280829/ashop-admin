@@ -5,6 +5,7 @@ namespace App\Admin\Forms;
 use Encore\Admin\Widgets\Form;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class ShopConfig extends Form
 {
@@ -26,6 +27,8 @@ class ShopConfig extends Form
     {
         $keys = config('shopconfig.keys');
         $urlKeys = config('shopconfig.url_keys');
+
+        Log::info($request->all());
 
         foreach ($request->all() as $key => $value) {
             if (in_array($key, $keys)) {
@@ -60,9 +63,7 @@ class ShopConfig extends Form
         $this->text('shop_longitude', '店铺经度');
         $this->text('shop_latitude', '店铺纬度');
         $this->text('shop_address_detail', '店铺地址详细信息');
-
-        $this->latlong('shop_latitude', 'shop_longitude');
-
+        $this->latlong('shop_latitude', 'shop_longitude', '店铺所在地');
         $this->currency('minimum_price', '最低消费')->symbol('￥');
     }
 
